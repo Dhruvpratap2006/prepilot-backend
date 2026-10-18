@@ -8,6 +8,10 @@ jobs:
   build:
     runs-on: self-hosted
 
+    env:
+      PUPPETEER_SKIP_DOWNLOAD: "true"
+      PUPPETEER_EXECUTABLE_PATH: "/usr/bin/google-chrome-stable"
+
     strategy:
       matrix:
         node-version: [22.x]
@@ -22,18 +26,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      - name: Clean corrupted Puppeteer cache & Install dependencies
+      - name: Install dependencies
         run: |
-          # Remove incomplete Chrome downloads if the executable is missing
-          if [ -d ".cache/puppeteer" ] && [ -z "$(find .cache/puppeteer -name 'chrome' -type f 2>/dev/null)" ]; then
-            echo "Cleaning incomplete local Puppeteer cache..."
-            rm -rf .cache/puppeteer
-          fi
-          if [ -d "$HOME/.cache/puppeteer" ] && [ -z "$(find "$HOME/.cache/puppeteer" -name 'chrome' -type f 2>/dev/null)" ]; then
-            echo "Cleaning incomplete global Puppeteer cache..."
-            rm -rf "$HOME/.cache/puppeteer"
-          fi
-          npm ci
+          rm -rf .cache/puppeteer ~/.cache/puppeteer
+          npm ci --ignore-scripts
+          npm rebuild
 
       - name: Build project
         run: npm run build --if-present
