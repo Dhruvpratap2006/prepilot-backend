@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Environment variables — secrets, kabhi commit mat karna
+.env
+
+
+.cache/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS junk
+.DS_Store
+
+remaining.txt
