@@ -21,6 +21,6 @@ app.listen(PORT, '0.0.0.0', () => {
 
 app.get('/test', (req, res) => {
     res.json({
-        mesg : "test route is working fine"
+        mesg : "test route is working fine and Updated tests are also working fine"
     })
 })
