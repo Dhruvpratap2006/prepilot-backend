@@ -19,6 +19,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          clean: false
+
+      - name: Restore .env
+        run: cp /home/ubuntu/prepilot-backend.env .env
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
